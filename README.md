@@ -1,4 +1,4 @@
-# BensStats Visuals
+# Bensstats Visuals
 
 Data visualizations made by yours truly. 
 
