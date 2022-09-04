@@ -1,4 +1,4 @@
-# Bensstats Visuals
+# BensStats Visuals
 
 Data visualizations made by yours truly. 
 
@@ -7,4 +7,4 @@ Data visualizations made by yours truly.
 
 ![](https://github.com/benyamindsmith/bensstatsVisuals/blob/main/images/image_2022-09-04_154752287.png)
 
-[Code]()
+[Code](https://github.com/benyamindsmith/bensstatsVisuals/blob/main/code/ttcSubwayDelays2022.R)
