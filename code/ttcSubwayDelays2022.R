@@ -1,5 +1,4 @@
 library(opendatatoronto)
-library(sf)
 library(tidyverse)
 library(ggrepel)
 library(ggdark)
@@ -63,58 +62,43 @@ subwayStations <- subwayStations %>%
                           Station == "Vaughan" ~ -79.5274867,
                           Station == "Ossington" ~ -79.4263675,
                           TRUE ~ long))
-# Annotations
 
 
 ggplot()+
-  geom_sf(data=torontoMap,
+   geom_sf(data=torontoMap,
           fill="#777777",
           alpha=0.1,lwd=0.7)+
   geom_sf(data=ttcSubwayShapefiles, mapping=aes(color=ROUTE_NAME),
           lwd=1.4)+
   geom_point(data=
-               delayTimes %>% mutate(colorLab= ifelse(Station_new %in% (delayTimes %>% 
-                                                                          slice_max(avgDelay,n=5) %>% 
-                                                                          pull(Station_new)),"Yes","No")),
+delayTimes %>% mutate(colorLab= ifelse(Station_new %in% (delayTimes %>% 
+                             slice_max(avgDelay,n=5) %>% 
+                             pull(Station_new)),"Yes","No")),
              mapping=aes(x=long,y=lat,size=avgDelay),
              color=ifelse(delayTimes %>% mutate(colorLab= ifelse(Station_new %in% (delayTimes %>% 
-                                                                                    slice_max(avgDelay,n=5) %>% 
-                                                                                    pull(Station_new)),"Yes","No")) %>% 
-                            pull(colorLab)=="Yes","red","white"))+
-  geom_text_repel(data=delayTimes %>% slice_max(avgDelay,n=5),
-                  mapping=aes(x=long,
-                              y=lat,
-                              label= paste0(Station_new,
-                                            " Station, \n",
-                                            round(avgDelay,1),
-                                            " mins.")),
-                           vjust=case_when(delayTimes %>% 
-                                             slice_max(avgDelay,n=5) %>% 
-                                             pull(Station_new)=="Jane"~1.3,
-                                           delayTimes %>% 
-                                             slice_max(avgDelay,n=5) %>% 
-                                             pull(Station_new)=="Dupont"~-2,
-                                           delayTimes %>% 
-                                             slice_max(avgDelay,n=5) %>% 
-                                             pull(Station_new)=="Runnymede"~ -0.5,
-                                           delayTimes %>% 
-                                             slice_max(avgDelay,n=5) %>% 
-                                             pull(Station_new)=="Coxwell"~ -0.3,
-                                           TRUE ~ -1),
-                           family="Futura",
-                           colour="white")+
+                             slice_max(avgDelay,n=5) %>% 
+                             pull(Station_new)),"Yes","No")) %>% 
+                             pull(colorLab)=="Yes","red","white"))+
+  ggrepel::geom_text_repel(data=delayTimes %>% slice_max(avgDelay,n=5),
+             mapping=aes(x=long,y=lat,
+                         label= paste0(Station_new,
+                                       " Station, \n",round(avgDelay,1)," mins.")),
+            vjust=case_when(delayTimes %>% slice_max(avgDelay,n=5) %>% pull(Station_new)=="Jane"~1.3,
+                            delayTimes %>% slice_max(avgDelay,n=5) %>% pull(Station_new)=="Dupont"~-2,
+                            delayTimes %>% slice_max(avgDelay,n=5) %>% pull(Station_new)=="Runnymede"~ -1,
+                            TRUE ~ -1),
+            family="TorontoSubwayW01-Regular",
+            colour="white")+
   ggtitle("TTC Subway Average Delay Times 2022")+
   dark_theme_minimal()+
   theme(legend.position="right",
-        #legend.title= element_blank(),
+        legend.title= element_blank(),
         axis.text = element_blank(),
         axis.title = element_blank(),
-        text=element_text(family="Futura"),
-        plot.title=element_text(size=30,
-                                hjust = 0.5,
-                                vjust=-5))+
-  scale_color_manual(name="",
-                     values=c("#FECA0A",
+        text=element_text(family="TorontoSubwayW01-Regular"),
+        plot.title=element_text(size=20,
+                                hjust = 0.5))+
+  scale_color_manual(values=c("#FECA0A",
                               "#00A54F",
                               "#009BDE",
                               "#B30174"))+
