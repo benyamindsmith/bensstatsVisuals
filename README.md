@@ -11,4 +11,6 @@ Data visualizations made by yours truly.
 
 ## 2. Matlab Pumpkin 
 
+![](https://github.com/benyamindsmith/bensstatsVisuals/blob/main/images/image_2022-11-17_232225280.png)
 
+[Code](https://github.com/benyamindsmith/bensstatsVisuals/blob/main/code/matlabPumkin.R)
